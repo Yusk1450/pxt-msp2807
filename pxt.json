@@ -1,13 +1,17 @@
 {
-	"name": "msp2807",
-	"version": "0.0.1",
-	"description": "MSP2807 ILI9341 LCD driver for micro:bit",
-	"dependencies": {
-	  "core": "*"
-	},
-	"files": [
-	  "main.ts",
-	  "README.md"
-	],
-	"public": true
-  }
+    "name": "msp2807",
+    "version": "0.0.1",
+    "description": "MSP2807 ILI9341 LCD driver for micro:bit",
+    "dependencies": {
+        "core": "*"
+    },
+    "files": [
+        "main.ts",
+        "README.md"
+    ],
+    "testFiles": [],
+    "supportedTargets": [
+        "microbit"
+    ],
+    "public": true
+}

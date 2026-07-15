@@ -24,6 +24,19 @@ namespace MSP2807 {
         Magenta = 0xF81F
     }
 
+    /**
+     * RGB（各 0〜255）から色を作ります。
+     */
+    //% blockId=msp2807_rgb
+    //% block="RGB 赤 %r 緑 %g 青 %b"
+    //% r.min=0 r.max=255 r.defl=255
+    //% g.min=0 g.max=255 g.defl=255
+    //% b.min=0 b.max=255 b.defl=255
+    //% weight=85
+    export function rgb(r: number, g: number, b: number): Color {
+        return (((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3)) as Color
+    }
+
     function writeCommand(cmd: number): void {
         pins.digitalWritePin(LCD_DC, 0)
         pins.digitalWritePin(LCD_CS, 0)

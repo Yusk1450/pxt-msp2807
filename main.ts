@@ -104,14 +104,17 @@ namespace MSP2807 {
     }
 
     //% block="clear screen color %color"
+    //% color.fieldEditor="dropdown"
+    //% color.fieldOptions.enumName="Color"
     //% weight=90
-    export function fillScreen(color: Color): void {
+    export function fillScreen(color: number): void {
         fillRect(0, 0, 240, 320, color)
     }
 
     /**
      * 画面全体を RGB 色で塗りつぶします。
      */
+    //% blockId=msp2807_fill_screen_rgb
     //% block="画面を RGB 赤 %r 緑 %g 青 %b で塗りつぶす"
     //% r.min=0 r.max=255 r.defl=0
     //% g.min=0 g.max=255 g.defl=0
@@ -122,9 +125,11 @@ namespace MSP2807 {
     }
 
     //% block="draw pixel x %x y %y color %color"
+    //% color.fieldEditor="dropdown"
+    //% color.fieldOptions.enumName="Color"
     //% x.min=0 x.max=239 y.min=0 y.max=319
     //% weight=80
-    export function drawPixel(x: number, y: number, color: Color): void {
+    export function drawPixel(x: number, y: number, color: number): void {
         if (x < 0 || x >= 240 || y < 0 || y >= 320) return
 
         setWindow(x, y, x, y)
@@ -137,10 +142,12 @@ namespace MSP2807 {
     }
 
     //% block="fill rectangle x %x y %y width %w height %h color %color"
+    //% color.fieldEditor="dropdown"
+    //% color.fieldOptions.enumName="Color"
     //% x.min=0 x.max=239 y.min=0 y.max=319
     //% w.min=1 w.max=240 h.min=1 h.max=320
     //% weight=70
-    export function fillRect(x: number, y: number, w: number, h: number, color: Color): void {
+    export function fillRect(x: number, y: number, w: number, h: number, color: number): void {
         if (x < 0) {
             w += x
             x = 0
@@ -263,6 +270,8 @@ namespace MSP2807 {
 	 * 1文字を表示します。
 	 */
 	//% block="文字 %character を x %x y %y 大きさ %size 色 %color で表示"
+	//% color.fieldEditor="dropdown"
+	//% color.fieldOptions.enumName="Color"
 	//% character.defl="A"
 	//% x.min=0 x.max=239
 	//% y.min=0 y.max=319
@@ -273,7 +282,7 @@ namespace MSP2807 {
 		x: number,
 		y: number,
 		size: number,
-		color: Color
+		color: number
 	): void {
 		if (character.length == 0) {
 			return
@@ -306,6 +315,8 @@ namespace MSP2807 {
 	 * 文字列を表示します。
 	 */
 	//% block="文字列 %text を x %x y %y 大きさ %size 色 %color で表示"
+	//% color.fieldEditor="dropdown"
+	//% color.fieldOptions.enumName="Color"
 	//% text.defl="HELLO"
 	//% x.min=0 x.max=239
 	//% y.min=0 y.max=319
@@ -316,7 +327,7 @@ namespace MSP2807 {
 		x: number,
 		y: number,
 		size: number,
-		color: Color
+		color: number
 	): void {
 		let drawX = x
 
@@ -348,7 +359,10 @@ namespace MSP2807 {
 	/**
 	 * 選んだメッセージを表示します。
 	 */
+	//% blockId=msp2807_show_message
 	//% block="メッセージ %message を x %x y %y 大きさ %size 色 %color で表示"
+	//% color.fieldEditor="dropdown"
+	//% color.fieldOptions.enumName="Color"
 	//% x.min=0 x.max=239
 	//% y.min=0 y.max=319
 	//% size.min=1 size.max=8 size.defl=2
@@ -358,7 +372,7 @@ namespace MSP2807 {
 		x: number,
 		y: number,
 		size: number,
-		color: Color
+		color: number
 	): void {
 		let text = ""
 

@@ -217,6 +217,31 @@ namespace MSP2807 {
 			case 58: return [0x00, 0x36, 0x36, 0x00, 0x00] // :
 			case 63: return [0x02, 0x01, 0x51, 0x09, 0x06] // ?
 
+			// カタカナ（5×7・手描きビットマップ）
+			case 12540: return [0x08, 0x08, 0x08, 0x08, 0x08] // ー
+			case 12495: return [0x78, 0x07, 0x00, 0x07, 0x78] // ハ
+			case 12522: return [0x40, 0x47, 0x40, 0x00, 0x3F] // リ
+			case 12469: return [0x24, 0x47, 0x44, 0x3F, 0x04] // サ
+			case 12461: return [0x08, 0x4A, 0x3F, 0x0A, 0x08] // キ
+			case 12520: return [0x41, 0x41, 0x49, 0x49, 0x7F] // ヨ
+			case 12519: return [0x41, 0x41, 0x49, 0x49, 0x7F] // ョ（小）→ ヨ
+			case 12454: return [0x06, 0x42, 0x23, 0x12, 0x0E] // ウ
+			case 12490: return [0x24, 0x44, 0x7F, 0x04, 0x04] // ナ
+			case 12471: return [0x35, 0x40, 0x40, 0x22, 0x18] // シ
+			case 12516: return [0x04, 0x44, 0x3D, 0x04, 0x06] // ヤ
+			case 12515: return [0x04, 0x44, 0x3D, 0x04, 0x06] // ャ（小）→ ヤ
+			case 12452: return [0x08, 0x04, 0x02, 0x7D, 0x00] // イ
+			case 12510: return [0x11, 0x09, 0x49, 0x3D, 0x03] // マ
+			case 12521: return [0x04, 0x45, 0x25, 0x15, 0x0D] // ラ
+			case 12465: return [0x44, 0x3F, 0x04, 0x0A, 0x00] // ケ
+			case 12523: return [0x3F, 0x40, 0x20, 0x3F, 0x40] // ル
+			case 12486: return [0x01, 0x49, 0x3D, 0x09, 0x01] // テ
+
+			// 濁音（濁点は右上に2ドットで表現・7ドット幅）
+			case 12496: return [0x78, 0x07, 0x00, 0x07, 0x78, 0x01, 0x02] // バ
+			case 12462: return [0x08, 0x4A, 0x3F, 0x0A, 0x08, 0x01, 0x02] // ギ
+			case 12487: return [0x01, 0x49, 0x3D, 0x09, 0x01, 0x01, 0x02] // デ
+
 			default:
 				return [0x02, 0x01, 0x51, 0x09, 0x06] // 未対応文字は ?
 		}
@@ -248,7 +273,7 @@ namespace MSP2807 {
 
 		let font = getFontData(character)
 
-		for (let column = 0; column < 5; column++) {
+		for (let column = 0; column < font.length; column++) {
 			let pixels = font[column]
 
 			for (let row = 0; row < 7; row++) {
@@ -286,13 +311,58 @@ namespace MSP2807 {
 		for (let i = 0; i < text.length; i++) {
 			drawChar(text.charAt(i), drawX, y, size, color)
 
-			// 文字幅5ドット＋文字間1ドット
-			drawX += 6 * size
+			// 文字幅（グリフ列数）＋文字間1ドット
+			let width = getFontData(text.charAt(i)).length
+			drawX += (width + 1) * size
 
 			if (drawX >= 240) {
 				return
 			}
 		}
+	}
+
+	/**
+	 * 切り替えて表示できるメッセージ。
+	 */
+	export enum Message {
+		//% block="バリバリ作業なう"
+		Baribari,
+		//% block="しゃーなし"
+		Shaanashi,
+		//% block="今ならいけるで"
+		Ikeru
+	}
+
+	/**
+	 * 選んだメッセージを表示します。
+	 */
+	//% block="メッセージ %message を x %x y %y 大きさ %size 色 %color で表示"
+	//% x.min=0 x.max=239
+	//% y.min=0 y.max=319
+	//% size.min=1 size.max=8 size.defl=2
+	//% weight=45
+	export function showMessage(
+		message: Message,
+		x: number,
+		y: number,
+		size: number,
+		color: Color
+	): void {
+		let text = ""
+
+		switch (message) {
+			case Message.Baribari:
+				text = "バリバリサギョウナウ"
+				break
+			case Message.Shaanashi:
+				text = "シャーナシ"
+				break
+			case Message.Ikeru:
+				text = "イマナライケルデ"
+				break
+		}
+
+		drawText(text, x, y, size, color)
 	}
 
 }

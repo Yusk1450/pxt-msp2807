@@ -1,6 +1,6 @@
 {
     "name": "msp2807",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "MSP2807 ILI9341 LCD driver for micro:bit",
     "dependencies": {
         "core": "*"

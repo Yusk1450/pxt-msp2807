@@ -33,8 +33,8 @@ namespace MSP2807 {
     //% g.min=0 g.max=255 g.defl=255
     //% b.min=0 b.max=255 b.defl=255
     //% weight=85
-    export function rgb(r: number, g: number, b: number): Color {
-        return (((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3)) as Color
+    export function rgb(r: number, g: number, b: number): number {
+        return ((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3)
     }
 
     function writeCommand(cmd: number): void {
@@ -107,6 +107,18 @@ namespace MSP2807 {
     //% weight=90
     export function fillScreen(color: Color): void {
         fillRect(0, 0, 240, 320, color)
+    }
+
+    /**
+     * 画面全体を RGB 色で塗りつぶします。
+     */
+    //% block="画面を RGB 赤 %r 緑 %g 青 %b で塗りつぶす"
+    //% r.min=0 r.max=255 r.defl=0
+    //% g.min=0 g.max=255 g.defl=0
+    //% b.min=0 b.max=255 b.defl=0
+    //% weight=89
+    export function fillScreenRgb(r: number, g: number, b: number): void {
+        fillRect(0, 0, 240, 320, rgb(r, g, b))
     }
 
     //% block="draw pixel x %x y %y color %color"
